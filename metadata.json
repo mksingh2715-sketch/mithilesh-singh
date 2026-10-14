@@ -1,0 +1,6 @@
+{
+  "name": "Bihar School Teacher Master Data Manager",
+  "description": "Comprehensive Bihar teacher master data management system for Headmasters with category-wise tracking and official Prapatra I-X PDF generation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

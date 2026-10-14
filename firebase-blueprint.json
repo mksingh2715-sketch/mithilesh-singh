@@ -1,0 +1,231 @@
+{
+  "entities": {
+    "School": {
+      "title": "School",
+      "description": "Bihar school administrative profile managed by the Headmaster",
+      "type": "object",
+      "properties": {
+        "schoolName": {
+          "type": "string",
+          "description": "Official name of the school",
+          "maxLength": 150
+        },
+        "udiseCode": {
+          "type": "string",
+          "description": "11 digit UDISE code",
+          "maxLength": 15,
+          "pattern": "^[0-9]{11}$"
+        },
+        "block": {
+          "type": "string",
+          "description": "Block name",
+          "maxLength": 80
+        },
+        "district": {
+          "type": "string",
+          "description": "District name",
+          "maxLength": 80
+        },
+        "headmasterName": {
+          "type": "string",
+          "description": "Full name of the Headmaster",
+          "maxLength": 100
+        },
+        "headmasterUid": {
+          "type": "string",
+          "description": "Firebase Auth UID of the HM",
+          "maxLength": 128
+        },
+        "headmasterEmail": {
+          "type": "string",
+          "description": "Email address of the HM",
+          "maxLength": 150
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp ISO string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update timestamp ISO string"
+        }
+      },
+      "required": ["schoolName", "udiseCode", "block", "district", "headmasterName", "headmasterUid"]
+    },
+    "Teacher": {
+      "title": "Teacher",
+      "description": "Teacher record under an official Prapatra category",
+      "type": "object",
+      "properties": {
+        "schoolId": {
+          "type": "string",
+          "description": "Parent school UID",
+          "maxLength": 128
+        },
+        "formCategory": {
+          "type": "string",
+          "description": "Prapatra form category code (prapatra_1 to prapatra_10)",
+          "enum": [
+            "prapatra_1",
+            "prapatra_2",
+            "prapatra_3",
+            "prapatra_4",
+            "prapatra_5",
+            "prapatra_6",
+            "prapatra_7",
+            "prapatra_8",
+            "prapatra_9",
+            "prapatra_10"
+          ]
+        },
+        "teacherName": {
+          "type": "string",
+          "description": "Teacher full name in English Arial",
+          "maxLength": 120
+        },
+        "bpscRollNo": {
+          "type": "string",
+          "description": "BPSC Roll Number if applicable",
+          "maxLength": 30
+        },
+        "pranNo": {
+          "type": "string",
+          "description": "PRAN Number",
+          "maxLength": 30
+        },
+        "uanNo": {
+          "type": "string",
+          "description": "UAN Number for Niyojit teachers",
+          "maxLength": 30
+        },
+        "gpfOrPranNo": {
+          "type": "string",
+          "description": "GPF or PRAN number for old regular teachers",
+          "maxLength": 30
+        },
+        "sakshamtaAppNo": {
+          "type": "string",
+          "description": "Sakshamta Application number",
+          "maxLength": 40
+        },
+        "classLevel": {
+          "type": "string",
+          "description": "Class range (1-5, 6-8, 9-10, 11-12)",
+          "maxLength": 20
+        },
+        "designation": {
+          "type": "string",
+          "description": "Designation",
+          "maxLength": 60
+        },
+        "subject": {
+          "type": "string",
+          "description": "Teaching subject",
+          "maxLength": 80
+        },
+        "subCategory": {
+          "type": "string",
+          "description": "Sub-category like TRE-1/2/3, Exclusive-1..4, Phase-1/2, BPSC/34540",
+          "maxLength": 40
+        },
+        "niyojanUnit": {
+          "type": "string",
+          "description": "Niyojan unit name",
+          "maxLength": 100
+        },
+        "udiseCode": {
+          "type": "string",
+          "description": "School UDISE code",
+          "maxLength": 15
+        },
+        "schoolName": {
+          "type": "string",
+          "description": "School Name",
+          "maxLength": 150
+        },
+        "firstJoiningDate": {
+          "type": "string",
+          "description": "1st School joining date (dd/mm/yyyy)",
+          "maxLength": 15
+        },
+        "firstNiyojitJoiningDate": {
+          "type": "string",
+          "description": "Date of 1st Joining as Niyojit teacher (dd/mm/yyyy)",
+          "maxLength": 15
+        },
+        "firstSpecialJoiningDate": {
+          "type": "string",
+          "description": "1st School joining date as Exclusive/HT/HM (dd/mm/yyyy)",
+          "maxLength": 15
+        },
+        "presentJoiningDate": {
+          "type": "string",
+          "description": "Present School joining date (dd/mm/yyyy)",
+          "maxLength": 15
+        },
+        "dob": {
+          "type": "string",
+          "description": "Date of birth (dd/mm/yyyy)",
+          "maxLength": 15
+        },
+        "headFund": {
+          "type": "string",
+          "description": "Gob or SSA head",
+          "maxLength": 15
+        },
+        "basicPay": {
+          "type": "string",
+          "description": "Basic pay amount",
+          "maxLength": 20
+        },
+        "hraRate": {
+          "type": "string",
+          "description": "HRA percentage (5%, 7.5%, 10%)",
+          "maxLength": 10
+        },
+        "incrementDate": {
+          "type": "string",
+          "description": "Increment date (dd/mm/yyyy)",
+          "maxLength": 15
+        },
+        "mobileNo": {
+          "type": "string",
+          "description": "10-digit mobile number",
+          "maxLength": 15
+        },
+        "remarks": {
+          "type": "string",
+          "description": "Remarks",
+          "maxLength": 200
+        },
+        "orderIndex": {
+          "type": "number",
+          "description": "Sorting serial index"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "ISO timestamp"
+        }
+      },
+      "required": ["schoolId", "formCategory", "teacherName"]
+    }
+  },
+  "firestore": {
+    "/schools/{schoolId}": {
+      "schema": {
+        "$ref": "School"
+      },
+      "description": "School master profile indexed by Headmaster UID"
+    },
+    "/schools/{schoolId}/teachers/{teacherId}": {
+      "schema": {
+        "$ref": "Teacher"
+      },
+      "description": "Teacher records belonging to this school"
+    }
+  }
+}

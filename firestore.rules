@@ -1,0 +1,73 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSchoolOwner(schoolId) {
+      return isSignedIn() && request.auth.uid == schoolId;
+    }
+
+    function isValidSchool(data, schoolId) {
+      return data.keys().hasAll(['schoolName', 'udiseCode', 'block', 'district', 'headmasterName', 'headmasterUid'])
+        && data.schoolName is string && data.schoolName.size() <= 150
+        && data.udiseCode is string && data.udiseCode.size() <= 15
+        && data.block is string && data.block.size() <= 80
+        && data.district is string && data.district.size() <= 80
+        && data.headmasterName is string && data.headmasterName.size() <= 100
+        && data.headmasterUid is string && data.headmasterUid == schoolId && data.headmasterUid == request.auth.uid;
+    }
+
+    function isValidTeacher(data, schoolId) {
+      return data.keys().hasAll(['schoolId', 'formCategory', 'teacherName'])
+        && data.schoolId is string && data.schoolId == schoolId
+        && data.teacherName is string && data.teacherName.size() > 0 && data.teacherName.size() <= 120
+        && data.formCategory is string && (
+          data.formCategory == 'prapatra_1' ||
+          data.formCategory == 'prapatra_2' ||
+          data.formCategory == 'prapatra_3' ||
+          data.formCategory == 'prapatra_4' ||
+          data.formCategory == 'prapatra_5' ||
+          data.formCategory == 'prapatra_6' ||
+          data.formCategory == 'prapatra_7' ||
+          data.formCategory == 'prapatra_8' ||
+          data.formCategory == 'prapatra_9' ||
+          data.formCategory == 'prapatra_10'
+        );
+    }
+
+    match /schools/{schoolId} {
+      allow get: if isSchoolOwner(schoolId);
+      allow list: if isSchoolOwner(schoolId);
+      allow create: if isValidId(schoolId) && isSchoolOwner(schoolId) && isValidSchool(incoming(), schoolId);
+      allow update: if isValidId(schoolId) && isSchoolOwner(schoolId) && isValidSchool(incoming(), schoolId);
+      allow delete: if isValidId(schoolId) && isSchoolOwner(schoolId);
+
+      match /teachers/{teacherId} {
+        allow get, list: if isSchoolOwner(schoolId);
+        allow create: if isValidId(teacherId) && isSchoolOwner(schoolId) && isValidTeacher(incoming(), schoolId);
+        allow update: if isValidId(teacherId) && isSchoolOwner(schoolId) && isValidTeacher(incoming(), schoolId);
+        allow delete: if isValidId(teacherId) && isSchoolOwner(schoolId);
+      }
+    }
+  }
+}
